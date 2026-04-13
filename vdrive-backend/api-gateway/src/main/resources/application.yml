@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# JWT Configuration
+jwt:
+  secret: vdrive-secret-key-min-32-chars-for-hs256-algorithm-must-be-secure
+  expiration: 86400000 # 24 hours in milliseconds
+
+# Logging
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    ae.vdrive.gateway: DEBUG
